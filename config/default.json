@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://root:root@digishop.al5gg.mongodb.net/digiShop?retryWrites=true&w=majority",
+    "jwtSecret": "qwer!@#ﬁ*("
+}
