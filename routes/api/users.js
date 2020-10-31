@@ -1,7 +1,7 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
 const gravatar = require('gravatar');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const router = express.Router();
@@ -9,7 +9,7 @@ const router = express.Router();
 const User = require('../../models/Users');
 
 
-// @route - GET api/users
+// @route - POST api/users
 // @desc - Register user route
 // @access - public
 router.post('/', [
@@ -45,10 +45,10 @@ router.post('/', [
       password,
       avatar,
       client_id: 1
-   }); 
-   console.log(password, 'password!----!');
+   });
+  console.log(`----------${password}----------pwd--register`);
    const pwd = await bcrypt.hash(password, 10);
-   console.log(pwd, 'pwd!-----!');
+  console.log(`----------${pwd}----------pwd Encrypted-register`);
    user.password = pwd;
    await user.save();
 
@@ -60,7 +60,7 @@ router.post('/', [
 
    jwt.sign(payload, config.get('jwtSecret'), {
      expiresIn: 360000
-   }, (err, token)=>{
+   }, (err, token)=> {
     if(err){
       throw err;
     }

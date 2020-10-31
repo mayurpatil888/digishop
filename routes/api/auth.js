@@ -20,11 +20,11 @@ router.get('/', auth, async (req, res) => {
 });
 
 
-// @route - GET api/users
+// @route - POST api/auth
 // @desc - Login user 
 // @access - public
 router.post('/', [
-    body('email', 'Password required')
+    body('email', 'Email is required')
         .exists()
         .bail()
         .custom(async (email, { req }) => {
@@ -35,12 +35,10 @@ router.post('/', [
                 if (!user) {
                     return Promise.reject('Invalid credentials');
                 }
-                const pwd = await bcrypt.hash(password, 10);
-                console.log(password, 'password------');
-                console.log(pwd, 'pwd------');
-                console.log(user.password, 'user.password');
-                if (pwd !== user.password) {
-                    return Promise.reject('Invalid credentials1');
+
+                const isMatched = await bcrypt.compare(password, user.password);
+                if (!isMatched) {
+                    return Promise.reject('Invalid credentials');
                 }
                 req.user = user;
             })
