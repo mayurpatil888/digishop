@@ -1,0 +1,12 @@
+{
+  "extends": "eslint:recommended",
+  "rules": {
+    "import/no-unassigned-import": ["error", {
+      "allow": [
+        "**/*.css",
+        "**/*.less"
+      ]
+    }],
+    "indent": ["error", 2]
+  }
+}
